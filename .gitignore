@@ -1,0 +1,10 @@
+/node_modules
+
+/browser/*.js
+
+/.idea
+
+*.iml
+
+.project
+.settings

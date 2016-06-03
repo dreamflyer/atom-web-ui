@@ -1,0 +1,26 @@
+{
+  "name": "atom-web-ui",
+  "version": "0.0.18",
+  "main": "dist/index.js",
+  "description": "Atom UI port for web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dreamflyer/atom-web-ui.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "dependencies": {
+    "atom-ui-lib": "0.0.5"
+  },
+  "devDependencies": {
+    "typings": "^0.5.1",
+    "typescript": "1.8.7",
+    "webpack": "1.4.2",
+    "json-loader": "^0.5.1",
+    "css-loader": "^0.23.1",
+    "url-loader": "^0.5.7",
+    "html-loader": "^0.4.3",
+    "rimraf": "*"
+  }
+}

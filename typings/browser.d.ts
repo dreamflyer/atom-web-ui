@@ -1,0 +1,4 @@
+/// <reference path="browser/ambient/es6-promise/es6-promise.d.ts" />
+/// <reference path="browser/ambient/node/node.d.ts" />
+/// <reference path="browser/ambient/typescript/typescript.d.ts" />
+/// <reference path="browser/ambient/underscore/underscore.d.ts" />
