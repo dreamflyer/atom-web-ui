@@ -1,6 +1,9 @@
-/// <reference path="../../typings/main.d.ts" />
-import path = require("path");
 import atomStuff = require('./atomWebStuff');
+
+declare var require: any;
+declare var global: any;
+
+var path = require("path");
 
 var css: any = require("../../src/static/styles.css");
 var html: any = require("../../src/static/workspace.html");
