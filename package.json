@@ -11,8 +11,9 @@
     "build": "rimraf dist && tsc"
   },
   "dependencies": {
-    "atom-ui-lib": "0.0.5"
+    "atom-ui-lib": "*"
   },
+  "typings": "./dist/index.d.ts",
   "devDependencies": {
     "typings": "^0.5.1",
     "typescript": "1.8.7",

@@ -1,4 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
 export declare class Workspace {
     textEditor: TextEditor;
     rootPane: Pane;

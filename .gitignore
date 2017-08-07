@@ -1,10 +1,21 @@
 /node_modules
 
-/browser/*.js
+/src/core/*.js
+/src/core/*.js.map
+/src/core/*.d.ts
+
+/src/index.js
+/src/index.js.map
 
 /.idea
 
+/coverage
+
 *.iml
+
+/typings/
+
+/dist/
 
 .project
 .settings
