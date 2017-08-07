@@ -1,6 +1,6 @@
 {
   "name": "atom-web-ui",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "main": "dist/index.js",
   "description": "Atom UI port for web",
   "repository": {
