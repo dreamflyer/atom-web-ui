@@ -730,6 +730,8 @@ export class TextEditor {
     grammar: any = {
         scopeName: 'no-grammar'
     }
+
+
     constructor(editorPath: string, id: string = 'ace_editor', resolver?: any, private getSuggestions?: any) {
         this.editorPath = editorPath;
 
@@ -1110,6 +1112,14 @@ export function getWorkspace() {
    
     return workspace;
 }
+
+export var textEditors: any = {
+    build: function(options: any) {
+        return {
+            element: (<any>document).createElement("atom-text-editor")
+        };
+    }
+};
 
 (<any>window).remote = {require: () => new Object()};
 

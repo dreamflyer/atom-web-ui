@@ -22,6 +22,14 @@ export class AtomTextEditorModel {
 
         (<any>owner).model = this;
     }
+    
+    onDidChange(handler: (event: any) => any): any {
+        return this.emitter.handlersByEventName['did-change'].push(handler);
+    }
+    
+    destroy() {
+        this.emitter.handlersByEventName = {};
+    }
 
     setSoftWrapped(arg: boolean) {
 
