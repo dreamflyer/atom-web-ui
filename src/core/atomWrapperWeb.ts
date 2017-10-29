@@ -6,6 +6,7 @@ declare var global: any;
 var path = require("path");
 
 var css: any = require("../../src/static/styles.css");
+
 var html: any = require("../../src/static/workspace.html");
 
 var ace = require("../../src/static/ace");
@@ -34,7 +35,7 @@ export class Workspace {
 
     didDestroyPaneCallbacks: any[] = [];
     
-    constructor() {
+    constructor(private containerId?: string) {
         this.initUI();
     }
 
@@ -104,7 +105,7 @@ export class Workspace {
     }
     
     initHTML() {
-        var body: HTMLBodyElement = <HTMLBodyElement>document.body;
+        var body: HTMLElement = this.containerId ? document.getElementById(this.containerId) : <HTMLBodyElement>document.body;
 
         if(!body) {
             body = <HTMLBodyElement>document.createElement('body');
@@ -113,12 +114,14 @@ export class Workspace {
         }
 
         var style: HTMLStyleElement = <HTMLStyleElement>document.createElement('style');
-
-        style.innerText = css[0][1];
+        
+        var styleTextNode = document.createTextNode(css[0][1]);
+        
+        style.appendChild(styleTextNode);
 
         document.head.appendChild(style);
 
-        document.body.innerHTML = html;
+        body.innerHTML = html;
     }
 
     clear() {
@@ -272,6 +275,10 @@ export class Workspace {
         }
 
         return result;
+    }
+    
+    setActiveTextEditor(editor: TextEditor) {
+        this.textEditor = editor;
     }
 
     getActivePaneItem(): any {
@@ -545,14 +552,20 @@ export class Pane {
         return count;
     }
 
-    addItem(item:any, index:number) {
-        this.destroyItem(this.items[index]);
+    addItem(item:any, index?: number) {
+        var actualIndex: number = index || 0;
 
-        this.items[index] = item;
+        this.destroyItem(this.items[actualIndex]);
+
+        this.items[actualIndex] = item;
 
         item.pane = this;
 
         this.views.appendChild(item.element);
+        
+        if(item.attached) {
+            item.attached();
+        }
         
         this.refreshTabs(item);
 
@@ -1043,11 +1056,17 @@ function isSimpleMode() {
 
 export var config: any = {
     grammars: {
-        'api-workbench.grammars': ['source.raml']
+        'api-workbench.grammars': ['source.raml'],
     },
 
     get: function(key: string) {
         return this.grammars[key];
+    },
+
+    emitter: {
+        handlersByEventName: {
+            'did-change': []
+        }
     }
 }
 
@@ -1070,6 +1089,22 @@ export var grammars: any = {
         });
 
         return result;
+    },
+
+    emitter: {
+        handlersByEventName: {
+            'did-change': [],
+            'did-add-grammar': [],
+            'did-update-grammar': []
+        }
+    },
+    
+    nullGrammar: {
+        emitter: {
+            handlersByEventName: {
+                "did-update": []
+            }
+        }
     }
 }
 
@@ -1103,12 +1138,12 @@ function getGlobal() {
 
 export var workspace: Workspace;
 
-export function getWorkspace() {
+export function getWorkspace(containerId?: string) {
     if(workspace) {
         return workspace;
     }
    
-    workspace = new Workspace();
+    workspace = new Workspace(containerId);
    
     return workspace;
 }
