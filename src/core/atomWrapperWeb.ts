@@ -35,7 +35,7 @@ export class Workspace {
 
     didDestroyPaneCallbacks: any[] = [];
     
-    constructor(private containerId?: string) {
+    constructor(private containerId?: string, private modalId?: string) {
         this.initUI();
     }
 
@@ -97,7 +97,7 @@ export class Workspace {
         
         this.container = <HTMLDivElement>document.getElementById('root-pane-container');
         
-        this.modalPanel = document.getElementById('modal-panel');
+        this.modalPanel = document.getElementById(this.modalId || 'modal-panel');
 
         this.modalPanel.style.display = 'none';
 
@@ -144,17 +144,19 @@ export class Workspace {
 
     addModalPanel(itemHolder: any) {
         this.popup = itemHolder.item;
-
+        
         this.modalPanel.appendChild(this.popup);
 
-        this.modalPanel.style.display = null;
+        this.modalPanel.style.display = 'block';
+        this.modalPanel.parentElement.style.display = 'block';
 
         return {
             destroy: () => {
                 this.modalPanel.style.display = 'none';
+                this.modalPanel.parentElement.style.display = 'none';
 
                 if(this.popup.parentElement) {
-                    this.modalPanel.removeChild(this.popup);
+                    this.modalPanel.innerHTML = "";
                 }
             }
         }
@@ -1138,12 +1140,12 @@ function getGlobal() {
 
 export var workspace: Workspace;
 
-export function getWorkspace(containerId?: string) {
+export function getWorkspace(containerId?: string, modalId?: string) {
     if(workspace) {
         return workspace;
     }
    
-    workspace = new Workspace(containerId);
+    workspace = new Workspace(containerId, modalId);
    
     return workspace;
 }

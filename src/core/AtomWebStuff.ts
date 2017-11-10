@@ -1,3 +1,5 @@
+var aceEnabled = false;
+
 export class AtomTextEditorModel {
     owner: HTMLDivElement;
 
@@ -80,7 +82,7 @@ export class AtomTextEditorModel {
     createInputElement(): void {
         var oldInput = (<any>this).input;
 
-        if(this.isXml() || this.isJson()) {
+        if(aceEnabled && (this.isXml() || this.isJson())) {
             var input = document.createElement('div');
 
             var aceEditor: any = this.getAceEditor(input);
