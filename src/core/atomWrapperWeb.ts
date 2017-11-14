@@ -149,6 +149,8 @@ export class Workspace {
 
         this.modalPanel.style.display = 'block';
         this.modalPanel.parentElement.style.display = 'block';
+        
+        var didDestroys: any[] = [];
 
         return {
             destroy: () => {
@@ -158,7 +160,11 @@ export class Workspace {
                 if(this.popup.parentElement) {
                     this.modalPanel.innerHTML = "";
                 }
-            }
+
+                didDestroys.forEach(callback => callback());
+            },
+            
+            onDidDestroy: (callback: any) => didDestroys.push(callback) 
         }
     }
 
