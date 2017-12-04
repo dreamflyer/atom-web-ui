@@ -96,6 +96,10 @@ export class Workspace {
         isMutationSupport = areMutationEventsAvailable();
         
         this.container = <HTMLDivElement>document.getElementById('root-pane-container');
+
+        if(this.modalId && this.modalId !== 'modal-panel') {
+            document.getElementById('modal-panel').remove();
+        }
         
         this.modalPanel = document.getElementById(this.modalId || 'modal-panel');
 
